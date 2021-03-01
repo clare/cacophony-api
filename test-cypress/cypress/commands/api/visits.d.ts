@@ -1,6 +1,7 @@
 // load the global Cypress types
 /// <reference types="cypress" />
 
+<<<<<<< HEAD
 
 interface ComparableVisit {
   start?: Date;
@@ -17,10 +18,17 @@ declare namespace Cypress {
      * 
      * Please note:  visits must be listed in order of oldest to newest start dates. 
      * 
+=======
+declare namespace Cypress {
+  interface Chainable {
+    /**
+     * upload a single recording to for a particular camera
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
      */
     checkVisits(
       user: string,
       camera: string,
+<<<<<<< HEAD
       expectedVisits: ComparableVisit[] 
     ): Chainable<Element>;
 
@@ -36,5 +44,9 @@ declare namespace Cypress {
       expectedTags: string[] 
     ): Chainable<Element>;
 
+=======
+      noVists: number
+    ): Chainable<Element>;
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   }
 }

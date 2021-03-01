@@ -40,10 +40,17 @@ export function saveCreds(response: Cypress.Response, name: string, id = 0) {
   Cypress.env("testCreds")[name] = creds;
 }
 
+<<<<<<< HEAD
 export function checkRequestFails(requestDetails: Partial<Cypress.RequestOptions>) {
   // must set failOnStatusCode to false, to stop cypress from failing the test due to a failed status code before the then is called.
   requestDetails.failOnStatusCode = false;
   cy.request(requestDetails).then(
+=======
+export function checkRequestFails(requestdetails: any) {
+  // must set failOnStatusCode to false, to stop cypress from failing the test due to a failed status code before the then is called.
+  requestdetails.failOnStatusCode = false;
+  cy.request(requestdetails).then(
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
     (response) =>
       expect(
         response.isOkStatusCode,
@@ -52,10 +59,58 @@ export function checkRequestFails(requestDetails: Partial<Cypress.RequestOptions
   );
 }
 
+<<<<<<< HEAD
 export function makeAuthorizedRequest(requestDetails: Partial<Cypress.RequestOptions>, credName: string): Cypress.Chainable<Cypress.Response> {
   const creds = getCreds(credName); 
   requestDetails.headers = creds.headers;
   return cy.request(requestDetails);
+=======
+export function sendMultipartMessage(
+  url: string,
+  jwt: string,
+  formData: any,
+  onComplete: any
+): void {
+  const xhr = new XMLHttpRequest();
+  xhr.open("POST", url);
+  xhr.setRequestHeader("authorization", jwt);
+  xhr.responseType = "json";
+  xhr.onload = function () {
+    onComplete(xhr);
+  };
+  xhr.onerror = function () {
+    onComplete(xhr);
+  };
+  xhr.send(formData);
+}
+
+// Uploads a file and data in a multipart message
+// the file must be in the fixtures folder
+export function uploadFile(
+  url: string,
+  credName: string,
+  fileName: string,
+  fileType: string,
+  data: any
+) {
+  const jwt = getCreds(credName).jwt;
+
+  // Get file from fixtures as binary
+  cy.fixture(fileName, "binary").then((fileBinary) => {
+    // File in binary format gets converted to blob so it can be sent as Form data
+    const blob = Cypress.Blob.binaryStringToBlob(fileBinary, fileType);
+
+    // Build up the form
+    const formData = new FormData();
+    formData.set("file", blob, fileName); //adding a file to the form
+    formData.set("data", JSON.stringify(data));
+    // Perform the request
+
+    sendMultipartMessage(url, jwt, formData, function (xhr) {
+      expect(xhr.status).to.eq(200);
+    });
+  });
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 }
 
 type IsoFormattedDateString = string;

@@ -40,6 +40,10 @@ script:
  - cp cypress.json.TEMPLATE cypress.json 
  - npm install
  - npm run release
+<<<<<<< HEAD
+=======
+ - cd ..
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 
 before_deploy:
 - version=${TRAVIS_TAG/v/}

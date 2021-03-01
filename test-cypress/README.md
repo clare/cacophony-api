@@ -14,9 +14,12 @@ npm run dev
 ### Testing against a different server
 You can test against code running on any environment by changing the cacophony-api-server in cypress.json 
 
+<<<<<<< HEAD
 
 # More information
 
 Before you write your own tests please read the following:
 
 [Test architecture](/test-cypress/architecture.md)
+=======
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c

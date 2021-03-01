@@ -1,14 +1,19 @@
 // load the global Cypress types
 /// <reference types="cypress" />
 
+<<<<<<< HEAD
 import { uploadFile } from "../fileUpload";
 import { v1ApiPath, DEFAULT_DATE, makeAuthorizedRequest } from "../server";
+=======
+import { v1ApiPath, uploadFile, DEFAULT_DATE } from "../server";
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 import { logTestDescription } from "../descriptions";
 
 let lastUsedTime = DEFAULT_DATE;
 
 Cypress.Commands.add(
   "uploadRecording",
+<<<<<<< HEAD
   (cameraName: string, details: ThermalRecordingInfo) => {
     const data = makeRecordingDataFromDetails(details);
 
@@ -62,6 +67,24 @@ Cypress.Commands.add(
       cy.log(`request is ${JSON.stringify(inter.response.body)}`);
       cy.userTagRecording(inter.response.body.recordingId, 0, tagger, tag);
     });
+=======
+  (cameraName: string, details: ThermalRecordingInfo, log = true) => {
+    const data = makeRecordingDataFromDetails(details);
+
+    logTestDescription(
+      `Upload '${JSON.stringify(details)}' recording to '${cameraName}'`,
+      { camera: cameraName, requestData: data },
+      log
+    );
+
+    const fileName = "invalid.cptv";
+    const url = v1ApiPath("recordings");
+    const fileType = "application/cptv";
+
+    uploadFile(url, cameraName, fileName, fileType, data);
+    // must wait until the upload request has completed
+    cy.wait(["@addRecording"]);
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   }
 );
 
@@ -114,7 +137,11 @@ function makeRecordingDataFromDetails(
 
   if (!details.noTracks) {
     const model = details.model ? details.model : "Master";
+<<<<<<< HEAD
     addTracksToRecording(data, model, details.tracks, details.tags);
+=======
+    addTracksToRecording(data, model, details.tracks);
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   }
 
   return data;
@@ -122,7 +149,11 @@ function makeRecordingDataFromDetails(
 
 function getDateForRecordings(details: ThermalRecordingInfo): Date {
   let date = lastUsedTime;
+<<<<<<< HEAD
   
+=======
+
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   if (details.time) {
     date = details.time;
   } else if (details.minsLater || details.secsLater) {
@@ -147,8 +178,12 @@ function getDateForRecordings(details: ThermalRecordingInfo): Date {
 function addTracksToRecording(
   data: ThermalRecordingData,
   model: string,
+<<<<<<< HEAD
   trackDetails?: TrackInfo[], 
   tags?: string[]
+=======
+  trackDetails?: TrackInfo[]
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 ): void {
   data.metadata = {
     algorithm: {
@@ -157,6 +192,7 @@ function addTracksToRecording(
     tracks: []
   };
 
+<<<<<<< HEAD
   if (tags && !trackDetails) {
     trackDetails = tags.map((tag) => {return {tag};});
   }
@@ -169,6 +205,14 @@ function addTracksToRecording(
       return {
         start_s: track.start_s || 2 + count * 10,
         end_s: track.end_s || 8 + count * 10,
+=======
+  if (trackDetails) {
+    data.metadata.tracks = trackDetails.map((track) => {
+      let tag = track.tag ? track.tag : "possum";
+      return {
+        start_s: 2,
+        end_s: 8,
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
         confident_tag: tag,
         confidence: 0.9
       };

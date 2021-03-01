@@ -6,7 +6,11 @@ declare namespace Cypress {
     /**
      * create user and save api credentials further use
      */
+<<<<<<< HEAD
     apiCreateUser(userName: string, log?: boolean): Chainable<Element>;
+=======
+    apiCreateUser(userName: string, log: boolean): Chainable<Element>;
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 
     /**
      * user sign in and stored with api credentials for further in the test
@@ -19,7 +23,11 @@ declare namespace Cypress {
     apiCreateGroup(
       userName: string,
       groupName: string,
+<<<<<<< HEAD
       log?: boolean
+=======
+      log: boolean
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
     ): Chainable<Element>;
 
     /**

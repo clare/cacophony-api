@@ -2,8 +2,13 @@
 /// <reference types="cypress" />
 
 interface TrackInfo {
+<<<<<<< HEAD
   start_s? : number,
   end_s? : number,
+=======
+  // start_s? : 10,
+  // end_s? : 22.2,
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   tag?: string;
   // confidence?: number,
 }
@@ -16,7 +21,10 @@ interface ThermalRecordingInfo {
   noTracks?: boolean; // by default there will normally be one track, set to true if you don't want tracks
   minsLater?: number; // minutes that later that the recording is taken
   secsLater?: number; // minutes that later that the recording is taken
+<<<<<<< HEAD
   tags?: string[]; // short cut for defining tags for each track
+=======
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 }
 
 declare namespace Cypress {
@@ -26,6 +34,7 @@ declare namespace Cypress {
      */
     uploadRecording(
       cameraName: string,
+<<<<<<< HEAD
       details: ThermalRecordingInfo
     ): Cypress.Chainable<Interception>;
 
@@ -44,5 +53,10 @@ declare namespace Cypress {
     );
 
     thenUserTagAs(tagger: string, tag: string);
+=======
+      details: ThermalRecordingInfo,
+      log?: boolean
+    ): Chainable<Element>;
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
   }
 }

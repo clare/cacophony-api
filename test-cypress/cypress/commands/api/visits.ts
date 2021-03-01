@@ -5,6 +5,7 @@ import { v1ApiPath, getCreds } from "../server";
 import { logTestDescription } from "../descriptions";
 
 Cypress.Commands.add(
+<<<<<<< HEAD
   "checkVisitTags",
   (user: string, camera: string, expectedTags: string[]) => {
     const expectedVisits = expectedTags.map((tag) => {return {tag}});
@@ -99,6 +100,40 @@ function checkResponseMatches(response: any, expectedVisits: ComparableVisit[]) 
   expect(JSON.stringify(responseVisitsToCompare)).to.eq(JSON.stringify(expectedVisits));
 }
 
+=======
+  "checkVisits",
+  (user: string, camera: string, noVists: number) => {
+    logTestDescription(`Check number of visits is ${noVists}`, {
+      user: user,
+      camera: camera,
+      expectedVisits: noVists
+    });
+
+    const where: VisitsWhere = {
+      duration: { $gte: "0" },
+      type: "thermalRaw"
+    };
+
+    if (camera) {
+      where.DeviceId = getCreds(camera).id;
+    }
+
+    const params = {
+      where: JSON.stringify(where),
+      limit: 100
+    };
+
+    const visitsNum = noVists;
+    cy.request({
+      method: "GET",
+      url: v1ApiPath("recordings/visits", params),
+      headers: getCreds(user).headers
+    }).then((response) => {
+      expect(response.body.numVisits).to.eq(visitsNum);
+    });
+  }
+);
+>>>>>>> 45ba91c66c9e557bb173ce07c612f6665beb107c
 
 interface VisitsWhere {
   type: string;
